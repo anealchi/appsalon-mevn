@@ -38,7 +38,7 @@
             placeholder="Email de Usuario"
             validation="required|email"
             :validation-messages="{
-                required: 'El Nombre es Obligatorio',
+                required: 'El Email es Obligatorio',
                 email: 'Email no válido'
             }"
         />
@@ -50,7 +50,7 @@
             placeholder="Tu Contraseña"
             validation="required"
             :validation-messages="{
-                required: 'El Nombre es Obligatorio'
+                required: 'La Contraseña es Obligatoria'
             }"
         />
         

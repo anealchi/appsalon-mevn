@@ -1,6 +1,7 @@
 import { parse, formatISO, startOfDay, endOfDay, isValid } from "date-fns";
 import Appointmet from '../models/Appointment.js'
-import { validateObjectId, handleNotFoundError } from "../utils/index.js";
+import { validateObjectId, handleNotFoundError, formatDate } from "../utils/index.js";
+import { sendEmailNewAppointment, sendEmailUpdateAppointment, sendEmailDeleteAppointment } from "../emails/appointmentEmailService.js";
 
 const createAppointment = async (req, res) => {
     const appointment = req.body
@@ -8,7 +9,12 @@ const createAppointment = async (req, res) => {
 
     try {
         const newAppointment = new Appointmet(appointment)
-        await newAppointment.save()
+        const result = await newAppointment.save()
+
+        await sendEmailNewAppointment({
+            date: formatDate(result.date),
+            time: result.time
+        })
 
         res.json({
             msg: 'Tu Reserva se Realizó Correctamente'
@@ -87,6 +93,11 @@ const updateAppointment = async (req, res) => {
     try {
         const result = await appointment.save()
 
+        console.log(result)
+        await sendEmailUpdateAppointment({
+            date: formatDate(result.date),
+            time: result.time
+        })
         res.json({
             msg: 'Cita Actualizada Correctamente'
         })
@@ -114,7 +125,20 @@ const deleteAppointment = async (req, res) => {
     }
 
     try {
-        await appointment.deleteOne()
+        const result = await appointment.deleteOne()
+
+        /**
+         * result no devuelve la cita borrada
+         * devuelve el estado de la operación realizada
+         * { acknowledged: true, deletedCount: 1 }
+         */
+        
+        // console.log(result)
+        
+        // await sendEmailDeleteAppointment({
+        //     date: formatDate(result.date),
+        //     time: result.time
+        // })
 
         res.json({msg: 'Cita Cancelada Exitosamente'})
     } catch (error) {

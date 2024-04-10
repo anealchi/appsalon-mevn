@@ -52,7 +52,7 @@
             placeholder="Email de Registro"
             validation="required|email"
             :validation-messages="{
-                required: 'El Nombre es Obligatorio',
+                required: 'El Email es Obligatorio',
                 email: 'Email no válido'
             }"
         />
@@ -64,7 +64,7 @@
             placeholder="Tu Contraseña - Min 8 Caracteres"
             validation="required|length:8"
             :validation-messages="{
-                required: 'El Nombre es Obligatorio',
+                required: 'La Contraseña es Obligatoria',
                 length: 'La Contraseña debe contener al menos 8 caracteres'
             }"
         />
@@ -76,7 +76,7 @@
             placeholder="Repite la Contraseña"
             validation="required|confirm"
             :validation-messages="{
-                required: 'El Nombre es Obligatorio',
+                required: 'Repetir Contraseña es Obligatoria',
                 confirm: 'Las contraseñas no son iguales'
             }"
         />

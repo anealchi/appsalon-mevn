@@ -12,5 +12,14 @@ export default {
     },
     auth() {
         return api.get('/auth/user')
+    },
+    forgotPassword(data) {
+        return api.post('/auth/forgot-password', data)
+    },
+    verifyPasswordResetToken(token) {
+        return api.get(`/auth/forgot-password/${token}`)
+    },
+    updatePassword(token, data) {
+        return api.post(`/auth/forgot-password/${token}`, data)
     }
 }
